@@ -1,11 +1,14 @@
-var radius = require('radius');
-var dgram = require("dgram");
+import radius from 'radius';
+import dgram from 'dgram';
+import maclist from './mac.json' assert { type: "json" };
 
 var secret = 'Afwefewfew4334r433fweefregrerfwfwfewfew';
 var server = dgram.createSocket("udp4");
 
+console.log(maclist)
+
 server.on("message", function (msg, rinfo) {
-    var code, username, password, vlan, packet;
+    var code, mac, vlan, packet;
     packet = radius.decode({ packet: msg, secret: secret });
 
     if (packet.code != 'Access-Request') {
@@ -13,20 +16,19 @@ server.on("message", function (msg, rinfo) {
         return;
     }
 
-    username = packet.attributes['User-Name'];
-    password = packet.attributes['User-Password'];
+    mac = packet.attributes['User-Name'];
 
-    console.log('Access-Request for ' + username);
+    console.log('Access-Request for MAC:' + mac);
 
-    /*
-    if (username == 'jlpicard' && password == 'beverly123') {
-      code = 'Access-Accept';
-    } else {
-      code = 'Access-Reject';
+
+    if (maclist.includes(mac)) {
+        console.log("Client from MAClist")
+        vlan = '1'
     }
-    */
-
-    vlan = '2'
+    else {
+        vlan = '2'
+        console.log("Guest Access")
+    }
 
     var response = radius.encode_response({
         packet: packet,
@@ -40,7 +42,6 @@ server.on("message", function (msg, rinfo) {
         ]
     });
 
-    console.log('Sending ' + code + ' for user ' + username);
     server.send(response, 0, response.length, rinfo.port, rinfo.address, function (err, bytes) {
         if (err) {
             console.log('Error sending response to ', rinfo);
