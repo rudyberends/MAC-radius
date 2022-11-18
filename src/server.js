@@ -5,8 +5,6 @@ import maclist from './mac.json' assert { type: "json" };
 var secret = 'Afwefewfew4334r433fweefregrerfwfwfewfew';
 var server = dgram.createSocket("udp4");
 
-console.log(maclist)
-
 server.on("message", function (msg, rinfo) {
     var code, mac, vlan, packet;
     packet = radius.decode({ packet: msg, secret: secret });
