@@ -19,12 +19,12 @@ server.on("message", function (msg, rinfo) {
     mac = packet.attributes['User-Name'];
 
     if (maclist.includes(mac)) {
-        console.log(`Access-Request for MAC:${mac}[VLAN 1 - LAN]`);
+        console.log(`Access-Request for MAC:${mac} [VLAN 1 - LAN]`);
         vlan = '1'
     }
     else {
         vlan = '2'
-        console.log(`Access-Request for MAC:${mac}[VLAN 2 - GUEST]`);
+        console.log(`Access-Request for MAC:${mac} [VLAN 2 - GUEST]`);
     }
 
     var response = radius.encode_response({
