@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  beolinkaudioserver:
+    image: mac-radius 
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 1812:1812

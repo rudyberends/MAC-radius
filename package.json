@@ -1,0 +1,17 @@
+{
+  "name": "mac-radius",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dgram": "^1.0.1",
+    "radius": "^1.1.4"
+  }
+}
