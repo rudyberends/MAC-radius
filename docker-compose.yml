@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  beolinkaudioserver:
+  mac-radius:
     image: mac-radius 
     build:
       context: .
